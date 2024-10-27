@@ -10,7 +10,7 @@ from posts.serializers import UserSerializer
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
+from .pagination import TwitterLikePagination
 
 class PostCreateListView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
@@ -83,3 +83,10 @@ def follow_user(request, user_id):
     
     # Retorna uma resposta JSON com o status do relacionamento
     return JsonResponse({'following': following})
+
+
+class PostCreateListView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = TwitterLikePagination  # Aplica a paginação de estilo Twitter
