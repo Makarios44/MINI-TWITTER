@@ -2,22 +2,22 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Listar e criar posts
+    # List and create posts
     path('posts/', views.PostCreateListView.as_view(), name='post-list'),
 
-    # Recuperar, atualizar e excluir post
+    #  update and rub post´s
     path('posts/<int:pk>/', views.PostRetrieveUpdateDestroyView.as_view(), name='update-delete-post'),
 
-    # Criar post via formulário (se for uma view baseada em função)
+    # creates forms
     path('create/', views.create_post_view, name='create_post'),
 
-    # Exibir perfil do usuário
+    # shows the profile
     path('profile/<str:username>/', views.profile_view, name='profile_view'),
 
-    # Curtir post
+    # likes posts
     path('like/<int:post_id>/', views.like_post, name='like_post'),
 
-    # Seguir usuário
+    # follows other users
     path('follow/<int:user_id>/', views.follow_user, name='follow_user'),
 
    

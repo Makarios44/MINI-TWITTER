@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-# Serializador para o registro de usuário com campos adicionais
+# Serializer for user registration with additional fields
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     email = serializers.EmailField(required=True)
@@ -22,7 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-# Serializador para visualizar o perfil do usuário com campos adicionais
+# Serializer to view user profile with additional fields
 class ProfileSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     first_name = serializers.CharField()
@@ -36,5 +36,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email']  # Adicione os campos desejados
-        
+        fields = ['id', 'username', 'email']  

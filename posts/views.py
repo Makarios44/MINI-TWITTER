@@ -17,13 +17,13 @@ class PostCreateListView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-# Visualizar, atualizar e deletar posts
+# View, update, and delete posts
 class PostRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
 
-# Visualizar seguidores e seguidos de um usuário
+# View followers and followees of a user
 class FollowView(generics.ListCreateAPIView):
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
@@ -52,36 +52,36 @@ def profile_view(request, username):
 
 @login_required
 def like_post(request, post_id):
-    """Função para curtir/descurtir um post."""
+    """Function to like/unlike a post."""
     post = get_object_or_404(Post, id=post_id)
     
-    # Verifica se o usuário já curtiu o post
+    # Checks if the user has already liked the post
     if request.user in post.likes.all():
-        post.likes.remove(request.user)  # Descurtir
+        post.likes.remove(request.user)  # Unlike
         liked = False
     else:
-        post.likes.add(request.user)  # Curtir
+        post.likes.add(request.user)  # Like
         liked = True
     
-    # Retorna uma resposta JSON com o status da curtida
+    # Returns a JSON response with the like status
     return JsonResponse({'liked': liked, 'total_likes': post.likes.count()})
 
 @login_required
 def follow_user(request, user_id):
-    """Função para seguir/parar de seguir um usuário."""
+    """Function to follow/unfollow a user."""
     target_user = get_object_or_404(User, id=user_id)
     
-    # Verifica se o usuário já está seguindo o usuário alvo
+    # Checks if the user is already following the target user
     if Follow.objects.filter(follower=request.user, following=target_user).exists():
-        # Se já segue, remove o relacionamento
+        # If following, remove the relationship
         Follow.objects.filter(follower=request.user, following=target_user).delete()
         following = False
     else:
-        # Caso contrário, cria o relacionamento de seguir
+        # Otherwise, create the follow relationship
         Follow.objects.create(follower=request.user, following=target_user)
         following = True
     
-    # Retorna uma resposta JSON com o status do relacionamento
+    # Returns a JSON response with the follow status
     return JsonResponse({'following': following})
 
 
@@ -89,4 +89,4 @@ class PostCreateListView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = TwitterLikePagination  # Aplica a paginação de estilo Twitter
+    pagination_class = TwitterLikePagination  # Applies Twitter-like pagination

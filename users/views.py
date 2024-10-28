@@ -14,12 +14,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-# View para registro de novos usuários via API
+# View for registering new users via API
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
-# View para visualizar o perfil do usuário autenticado via API
+#View to view the profile of the user authenticated via API
 class ProfileView(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = ProfileSerializer
@@ -28,14 +28,14 @@ class ProfileView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user
 
-# View para login de usuário
+# login view
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('profile')  # Redireciona ao perfil se o usuário já está logado
-    # Implementação do login depende do front-end, ou pode usar login API endpoint
+        return redirect('profile')  
+    # this will need a front-end interface
     return Response({"detail": "Página de login"}, status=status.HTTP_200_OK)
 
-# View para logout de usuário
+# User logout view 
 def logout_view(request):
     logout(request)
     return Response({"detail": "Logout realizado com sucesso."}, status=status.HTTP_200_OK)
@@ -50,5 +50,5 @@ def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
         'posts': reverse('post-list', request=request, format=format),
-        # Adicione outros endpoints conforme necessário
+        #  endpoints
     })

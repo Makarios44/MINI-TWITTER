@@ -10,7 +10,7 @@ urlpatterns = [
     path('api/users/', include('users.urls')),
     path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/', api_root, name='api-root'),  # Rota para api_root
+    path('api/', api_root, name='api-root'),  #api_root
     path('api/users/', UserListView.as_view(), name='user-list'),
 
 ]
