@@ -29,5 +29,5 @@ Features
 1. Clone this repository:
 
    
-   git clone <URL do repositório>
+   git clone <(https://github.com/Makarios44/MINI-TWITTER.git)>
    cd Mini-Twitter
